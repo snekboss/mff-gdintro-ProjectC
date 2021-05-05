@@ -1,0 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Projectile : MonoBehaviour, IDamagable
+{
+    public float projectileDamage;
+    public float projectileSpeed;
+    public float selfDestructTimer;
+    Rigidbody rbody;
+
+    Collider col;
+    void Start()
+    {
+        rbody = this.gameObject.AddComponent<Rigidbody>();
+        rbody.useGravity = true;
+        rbody.AddForce(rbody.transform.forward * projectileSpeed, ForceMode.VelocityChange);
+
+        col = this.GetComponent<Collider>();
+        col.isTrigger = true;
+
+        Destroy(this.gameObject, selfDestructTimer); // TODO: I don't know if doing this prematurely is risky.
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // TODO: I probably have to write my own collision detection thing for faster bullets...
+        // TODO: Right now, projectiles are in Projectile Layer (physics).
+        // If the execution came here, then it must have hit something that I intended in the collision matrix.
+        // Therefore, destroy the bullet at the end.
+
+        IDamagable dmgable = other.gameObject.GetComponent<IDamagable>();
+        if (dmgable != null)
+        {
+            dmgable.GetDamaged(projectileDamage);
+        }
+
+        Destroy(this.gameObject);
+    }
+
+    public void GetDamaged(float amount)
+    {
+        Destroy(this.gameObject);
+    }
+}
