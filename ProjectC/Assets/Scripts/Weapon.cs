@@ -34,6 +34,8 @@ public class Weapon : MonoBehaviour
         if (!isFiring && !isReloading)
         {
             curAmmoInMag--;
+            PlayerStats.PlayerStatsSingleton.totalShotsFired++;
+
             GameObject projectile = Instantiate(projectilePrefab);
             projectile.transform.position = projectileSpawnPoint.position;
             projectile.transform.rotation = projectileSpawnPoint.transform.rotation;
@@ -59,6 +61,8 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
+
+        PlayerStats.PlayerStatsSingleton.totalReloads++;
 
         int neededAmmo = magazineCapacity - curAmmoInMag;
         int whatWeGot = Mathf.Min(neededAmmo, magazineCapacity);

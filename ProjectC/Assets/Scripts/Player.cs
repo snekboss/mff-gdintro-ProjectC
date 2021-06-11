@@ -142,7 +142,10 @@ public class Player : MonoBehaviour, IDamagable
 
     void Start()
     {
+        mouseSensitivity = PlayerStats.MouseSensitivity;
+
         playerHealth = playerMaxHealth;
+        PlayerStats.PlayerStatsSingleton.totalHealthLost = 0; // to cause lazy initialization of the singleton.
 
         playerRbody = this.gameObject.AddComponent<Rigidbody>();
         playerRbody.mass = 70.0f;
@@ -162,6 +165,8 @@ public class Player : MonoBehaviour, IDamagable
         HandleMovement();
         HandleChangeWeapon();
         HandleWeapon();
+
+        UpdateTime();
     }
 
     void FixedUpdate()
@@ -174,6 +179,8 @@ public class Player : MonoBehaviour, IDamagable
         int amountInt = (int)amount;
 
         playerHealth -= amountInt;
+
+        PlayerStats.PlayerStatsSingleton.totalHealthLost += amountInt;
 
         if (playerHealth <= 0)
         {
@@ -200,5 +207,13 @@ public class Player : MonoBehaviour, IDamagable
             return listWeapons[0]; // If only 1 weapon, then always return THAT. Don't care about isActive etc.
         else
             return listWeapons[iCurWeapon];
+    }
+
+    void UpdateTime()
+    {
+        if (playerMaxHealth > 0)
+        {
+            PlayerStats.PlayerStatsSingleton.playTime += Time.timeScale * Time.deltaTime;
+        }
     }
 }
