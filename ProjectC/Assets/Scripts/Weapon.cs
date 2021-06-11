@@ -16,34 +16,54 @@ public class Weapon : MonoBehaviour
     [Range(0.0f, 5.0f)]
     public float reloadTime;
 
-    // TODO: SetActive will cause coroutines to get messed up. Gotta think of something.
     bool isFiring;
     bool isReloading;
 
-
     public void Fire()
     {
-        // TODO: Implement "out of ammo, gotta reload" cases, etc.
+        if (!isReloading && curAmmoInMag <= 0)
+        {
+            if (remainingAmmo > 0)
+            {
+                Reload();
+            }
+            
+            return;
+        }
 
         if (!isFiring && !isReloading)
         {
-            isFiring = true;
+            curAmmoInMag--;
             GameObject projectile = Instantiate(projectilePrefab);
             projectile.transform.position = projectileSpawnPoint.position;
             projectile.transform.rotation = projectileSpawnPoint.transform.rotation;
 
+            isFiring = true;
             StartCoroutine(FireTimer());
         }
     }
 
     public void Reload()
     {
-        // TODO: Implement "no ammo at all, I can't even reload" cases, etc.
-
         if (isReloading || !isFiring)
         {
             return;
         }
+
+        if (curAmmoInMag == magazineCapacity)
+        {
+            return;
+        }
+
+        if (remainingAmmo <= 0)
+        {
+            return;
+        }
+
+        int neededAmmo = magazineCapacity - curAmmoInMag;
+        int whatWeGot = Mathf.Min(neededAmmo, magazineCapacity);
+        curAmmoInMag += whatWeGot;
+        remainingAmmo -= whatWeGot;
 
         isReloading = true;
         StartCoroutine(ReloadTimer());
@@ -59,7 +79,6 @@ public class Weapon : MonoBehaviour
 
     private IEnumerator ReloadTimer()
     {
-        // looks pretty similar to FireTimer, ey? ringing any alarm bells? not yet
         yield return new WaitForSeconds(reloadTime);
 
         isReloading = false;
@@ -75,5 +94,16 @@ public class Weapon : MonoBehaviour
         p.EquipNewWeapon(this.GetComponent<Weapon>());
 
         Destroy(this.GetComponent<Collider>());
+    }
+
+    private void OnEnable()
+    {
+        isReloading = false;
+        isFiring = false;
+    }
+
+    public bool isBusy()
+    {
+        return isFiring || isReloading;
     }
 }

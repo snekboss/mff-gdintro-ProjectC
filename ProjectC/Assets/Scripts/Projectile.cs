@@ -24,11 +24,6 @@ public class Projectile : MonoBehaviour, IDamagable
 
     private void OnTriggerEnter(Collider other)
     {
-        // TODO: I probably have to write my own collision detection thing for faster bullets...
-        // TODO: Right now, projectiles are in Projectile Layer (physics).
-        // If the execution came here, then it must have hit something that I intended in the collision matrix.
-        // Therefore, destroy the bullet at the end.
-
         IDamagable dmgable = other.gameObject.GetComponent<IDamagable>();
         if (dmgable != null)
         {

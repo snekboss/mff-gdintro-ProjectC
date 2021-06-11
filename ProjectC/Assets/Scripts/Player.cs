@@ -5,6 +5,10 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IDamagable
 {
+    // Health
+    public int playerHealth;
+    public int playerMaxHealth;
+
     // Movement related
     public LayerMask objectsLayer; // Things the player can walk on, collide with, etc. Go with "Default" layer for now (put player in "Player").
     [Range(0f, 10f)]
@@ -109,9 +113,8 @@ public class Player : MonoBehaviour, IDamagable
 
     void HandleChangeWeapon()
     {
-        // TODO: Don't change weapon if current weapon isFiring or isReloading. Otherwise it'll mess up the coroutines.
-
-        if (mouseScrollWheel == 0f || listWeapons.Count == 0 /*TODO: || isFiring || isReloading*/)
+        if (mouseScrollWheel == 0f || listWeapons.Count == 0
+            || (getCurrentWeapon() != null && getCurrentWeapon().isBusy()))
             return;
 
         getCurrentWeapon()?.gameObject.SetActive(false);
@@ -139,6 +142,8 @@ public class Player : MonoBehaviour, IDamagable
 
     void Start()
     {
+        playerHealth = playerMaxHealth;
+
         playerRbody = this.gameObject.AddComponent<Rigidbody>();
         playerRbody.mass = 70.0f;
         playerRbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -166,7 +171,14 @@ public class Player : MonoBehaviour, IDamagable
 
     public void GetDamaged(float amount)
     {
-        Debug.Log("TODO");
+        int amountInt = (int)amount;
+
+        playerHealth -= amountInt;
+
+        if (playerHealth <= 0)
+        {
+            Debug.Log("TODO: Show game over screen.");
+        }
     }
     public void EquipNewWeapon(Weapon weapon)
     {
