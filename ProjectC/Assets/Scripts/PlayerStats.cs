@@ -12,7 +12,7 @@ public class PlayerStats
     public int totalKills;
     public float playTime;
 
-    public static float MouseSensitivity;
+    public static float MouseSensitivity = 90f;
 
     public PlayerStats()
     {

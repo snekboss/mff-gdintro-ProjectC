@@ -106,8 +106,6 @@ public class Weapon : MonoBehaviour
         isFiring = false;
     }
 
-    public bool isBusy()
-    {
-        return isFiring || isReloading;
-    }
+    public bool IsReloading() { return isReloading;  }
+    public bool IsFiring() { return isFiring; }
 }

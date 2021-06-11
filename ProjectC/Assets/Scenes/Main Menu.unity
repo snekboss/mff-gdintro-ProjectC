@@ -869,7 +869,10 @@ MonoBehaviour:
     Jump: Spacebar
 
     Picking
-    up items: Just walk into them'
+    up items: Just walk into them
+
+
+    Pause Menu: M'
 --- !u!222 &801901063
 CanvasRenderer:
   m_ObjectHideFlags: 0

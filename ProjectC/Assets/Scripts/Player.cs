@@ -114,7 +114,7 @@ public class Player : MonoBehaviour, IDamagable
     void HandleChangeWeapon()
     {
         if (mouseScrollWheel == 0f || listWeapons.Count == 0
-            || (getCurrentWeapon() != null && getCurrentWeapon().isBusy()))
+            || (getCurrentWeapon() != null && getCurrentWeapon().IsFiring()))
             return;
 
         getCurrentWeapon()?.gameObject.SetActive(false);
@@ -215,5 +215,10 @@ public class Player : MonoBehaviour, IDamagable
         {
             PlayerStats.PlayerStatsSingleton.playTime += Time.timeScale * Time.deltaTime;
         }
+    }
+
+    public bool isReloading()
+    {
+        return getCurrentWeapon() == null ? false : getCurrentWeapon().IsReloading();
     }
 }
