@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public string weaponName;
     public Transform projectileSpawnPoint;
     public GameObject projectilePrefab;
     public int curAmmoInMag;
@@ -47,7 +48,7 @@ public class Weapon : MonoBehaviour
 
     public void Reload()
     {
-        if (isReloading || !isFiring)
+        if (isReloading)
         {
             return;
         }
@@ -64,11 +65,6 @@ public class Weapon : MonoBehaviour
 
         PlayerStats.PlayerStatsSingleton.totalReloads++;
 
-        int neededAmmo = magazineCapacity - curAmmoInMag;
-        int whatWeGot = Mathf.Min(neededAmmo, magazineCapacity);
-        curAmmoInMag += whatWeGot;
-        remainingAmmo -= whatWeGot;
-
         isReloading = true;
         StartCoroutine(ReloadTimer());
     }
@@ -84,6 +80,11 @@ public class Weapon : MonoBehaviour
     private IEnumerator ReloadTimer()
     {
         yield return new WaitForSeconds(reloadTime);
+
+        int neededAmmo = magazineCapacity - curAmmoInMag;
+        int whatWeGot = Mathf.Min(neededAmmo, magazineCapacity);
+        curAmmoInMag += whatWeGot;
+        remainingAmmo -= whatWeGot;
 
         isReloading = false;
         yield return null;

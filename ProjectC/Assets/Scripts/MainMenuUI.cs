@@ -36,6 +36,7 @@ public class MainMenuUI : MonoBehaviour
     public void OnStartGame()
     {
         SceneManager.LoadScene("Game Scene");
+        Time.timeScale = 1;
     }
 
     public void OnExitGame()

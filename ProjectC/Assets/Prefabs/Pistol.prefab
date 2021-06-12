@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191cc7b4bc5df044298f991785743bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Pistol
   projectileSpawnPoint: {fileID: 1268304737544420232}
   projectilePrefab: {fileID: 6631060821603289568, guid: 03b6f78cc600db6449a7e801cd3f0156, type: 3}
   curAmmoInMag: 7

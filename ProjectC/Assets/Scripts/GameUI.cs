@@ -13,10 +13,13 @@ public class GameUI : MonoBehaviour
     public Text txtWeaponInfo;
     public Text txtReloading;
 
-    public Text playerHealth;
     public RectTransform panelPlayerHealth;
     int panelPlayerHealthMaxWidth;
     Image imagePlayerHealth;
+
+    public GameObject panelGameOverScreen;
+    public Text txtGameOver;
+    public bool isGameOver = false;
 
     public Player player;
 
@@ -26,12 +29,6 @@ public class GameUI : MonoBehaviour
     float colorSimilarityEpsilon = 0.1f;
     int colorReloadTargetIndex;
     Color[] colorsReloadFlashing = new Color[2];
-
-
-    void OnExitToMainMenu()
-    {
-        SceneManager.LoadScene("Main Menu");
-    }
 
     private void Start()
     {
@@ -47,12 +44,27 @@ public class GameUI : MonoBehaviour
 
     private void Update()
     {
+        if (isGameOver)
+        {
+            return;
+        }
+
+        if (player.isDead)
+        {
+            panelGameOverScreen.SetActive(true);
+
+            txtGameOver.text = string.Format("Game Over\n\n{0}", PlayerStats.PlayerStatsSingleton.GetPlayerStats());
+            Time.timeScale = 0;
+            isGameOver = true;
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.M))
         {
             OnPauseMenuButtonPressed();
         }
 
-        if (player.isReloading())
+        if (player.isReloading() && isGamePaused == false)
         {
             txtReloading.gameObject.SetActive(true);
             PlayReloadFlashingTextAnimThingBro();
@@ -67,6 +79,18 @@ public class GameUI : MonoBehaviour
         panelPlayerHealth.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, playerHealthRatio * panelPlayerHealthMaxWidth);
 
         imagePlayerHealth.color = Color.Lerp(Color.red, Color.green, playerHealthRatio);
+
+        // Weapon info
+        Weapon curWeapon = player.getCurrentWeapon();
+        if (curWeapon != null)
+        {
+            txtWeaponInfo.text = string.Format("{0}: {1}/{2} ({3})",
+                curWeapon.weaponName, curWeapon.curAmmoInMag, curWeapon.magazineCapacity, curWeapon.remainingAmmo);
+        }
+        else
+        {
+            txtWeaponInfo.text = "No weapon";
+        }
     }
 
     void OnPauseMenuButtonPressed()
@@ -105,5 +129,11 @@ public class GameUI : MonoBehaviour
         float distance = Vector3.Distance(src, dest);
 
         return distance < colorSimilarityEpsilon;
+    }
+
+    public void OnButtonPressBackToMainMenu()
+    {
+        PlayerStats.PlayerStatsSingleton = null;
+        SceneManager.LoadScene("Main Menu");
     }
 }

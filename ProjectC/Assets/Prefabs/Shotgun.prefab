@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191cc7b4bc5df044298f991785743bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Shotgun
   projectileSpawnPoint: {fileID: 3309077881497356169}
   projectilePrefab: {fileID: 7586371727920415791, guid: 2299233f66ac10a4cab9a6882d8828a3, type: 3}
   curAmmoInMag: 7

@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191cc7b4bc5df044298f991785743bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Machinegun
   projectileSpawnPoint: {fileID: 479231654843817370}
   projectilePrefab: {fileID: 2038651750764087918, guid: 02f4a6707cc2e8640afda7c946d8c7be, type: 3}
   curAmmoInMag: 30

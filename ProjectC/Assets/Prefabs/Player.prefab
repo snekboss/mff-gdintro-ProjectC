@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7cd342e8066d134d8f122ecd946d541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 0
+  playerHealth: 100
   playerMaxHealth: 100
   objectsLayer:
     serializedVersion: 2

@@ -35,6 +35,7 @@ public class Player : MonoBehaviour, IDamagable
     // Inputs related
     bool isHoldingLMB;
     bool isPressedSpace;
+    bool isHoldingReloadButton;
     float mouseScrollWheel;
 
     // Pick ups related
@@ -44,6 +45,11 @@ public class Player : MonoBehaviour, IDamagable
     List<Weapon> listWeapons;
     int iCurWeapon;
     Transform weaponSlot; // good local position = new Vector3(0.75f, -0.6f, 0.7f);
+
+    // Death related
+    float floatCurTime;
+    float floatMaxTime = 5f;
+    public bool isDead = false;
 
     void InitLocalTransforms()
     {
@@ -71,6 +77,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         isHoldingLMB = Input.GetMouseButton((int)MouseButton.LeftMouse);
         isPressedSpace = Input.GetKeyDown(KeyCode.Space);
+        isHoldingReloadButton = Input.GetKeyDown(KeyCode.R);
 
         mouseScrollWheel = 0f;
         mouseScrollWheel = Input.GetAxisRaw("Mouse ScrollWheel");
@@ -113,7 +120,7 @@ public class Player : MonoBehaviour, IDamagable
 
     void HandleChangeWeapon()
     {
-        if (mouseScrollWheel == 0f || listWeapons.Count == 0
+        if (mouseScrollWheel == 0f || listWeapons.Count < 2
             || (getCurrentWeapon() != null && getCurrentWeapon().IsFiring()))
             return;
 
@@ -138,6 +145,10 @@ public class Player : MonoBehaviour, IDamagable
         {
             getCurrentWeapon()?.Fire();
         }
+        else if (isHoldingReloadButton && getCurrentWeapon()?.IsReloading() == false)
+        {
+            getCurrentWeapon()?.Reload();
+        }
     }
 
     void Start()
@@ -160,6 +171,13 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+
+        HandleFallToDeath();
+
         HandleInputs();
         HandleRotation();
         HandleMovement();
@@ -174,6 +192,23 @@ public class Player : MonoBehaviour, IDamagable
         playerRbody.MovePosition(playerRbody.position + playerMoveDir * movementSpeed * Time.fixedDeltaTime);
     }
 
+    void HandleFallToDeath()
+    {
+        if (isGrounded)
+        {
+            floatCurTime = 0;
+        }
+        else
+        {
+            floatCurTime += Time.deltaTime * Time.timeScale;
+
+            if (floatCurTime >= floatMaxTime)
+            {
+                GetDamaged(playerMaxHealth);
+            }
+        }
+    }
+
     public void GetDamaged(float amount)
     {
         int amountInt = (int)amount;
@@ -184,7 +219,7 @@ public class Player : MonoBehaviour, IDamagable
 
         if (playerHealth <= 0)
         {
-            Debug.Log("TODO: Show game over screen.");
+            isDead = true;
         }
     }
     public void EquipNewWeapon(Weapon weapon)
@@ -199,7 +234,7 @@ public class Player : MonoBehaviour, IDamagable
         weapon.gameObject.SetActive(firstWeapon);
     }
 
-    Weapon getCurrentWeapon()
+    public Weapon getCurrentWeapon()
     {
         if (listWeapons.Count == 0)
             return null;
