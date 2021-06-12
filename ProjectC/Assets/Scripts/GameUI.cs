@@ -51,7 +51,7 @@ public class GameUI : MonoBehaviour
 
         if (player.isDead)
         {
-            OnGameOverButtonPressed();
+            OnShowPlayerStatsButtonPressed();
             return;
         }
 
