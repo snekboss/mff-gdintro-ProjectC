@@ -12,7 +12,11 @@ public class GameUI : MonoBehaviour
 
     public Text txtWeaponInfo;
     public Text txtReloading;
+
     public Text playerHealth;
+    public RectTransform panelPlayerHealth;
+    int panelPlayerHealthMaxWidth;
+    Image imagePlayerHealth;
 
     public Player player;
 
@@ -35,6 +39,9 @@ public class GameUI : MonoBehaviour
         colorsReloadFlashing[0] = txtReloading.color;
         colorsReloadFlashing[1] = Color.red;
 
+        panelPlayerHealthMaxWidth = (int)panelPlayerHealth.rect.width;
+        imagePlayerHealth = panelPlayerHealth.GetComponent<Image>();
+
         colorReloadTargetIndex = 0;
     }
 
@@ -54,6 +61,12 @@ public class GameUI : MonoBehaviour
         {
             txtReloading.gameObject.SetActive(false);
         }
+
+        // Player health
+        float playerHealthRatio = (float)player.playerHealth / player.playerMaxHealth;
+        panelPlayerHealth.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, playerHealthRatio * panelPlayerHealthMaxWidth);
+
+        imagePlayerHealth.color = Color.Lerp(Color.red, Color.green, playerHealthRatio);
     }
 
     void OnPauseMenuButtonPressed()
