@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7586371727920415788}
   - component: {fileID: 7586371727920415790}
   - component: {fileID: 7586371727920415789}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shotgun Shells
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2885cb8bd5239ea40a33206847c3148a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileDamage: 75
+  projectileDamage: 45
   projectileSpeed: 20
   selfDestructTimer: 3
 --- !u!1001 &1859583775623871475

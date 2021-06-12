@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, IDamagable
 {
     // Health
     public int playerHealth;
-    public int playerMaxHealth;
+    public int playerMaxHealth = 100;
 
     // Movement related
     public LayerMask objectsLayer; // Things the player can walk on, collide with, etc. Go with "Default" layer for now (put player in "Player").
@@ -211,7 +211,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void GetDamaged(float amount)
     {
-        int amountInt = (int)amount;
+        int amountInt = (int)(amount * PlayerStats.GameDifficulty);
 
         playerHealth -= amountInt;
 

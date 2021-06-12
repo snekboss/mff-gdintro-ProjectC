@@ -20,6 +20,8 @@ public class Weapon : MonoBehaviour
     bool isFiring;
     bool isReloading;
 
+    public bool ownedByPlayer = false;
+
     public void Fire()
     {
         if (!isReloading && curAmmoInMag <= 0)
@@ -28,14 +30,18 @@ public class Weapon : MonoBehaviour
             {
                 Reload();
             }
-            
+
             return;
         }
 
         if (!isFiring && !isReloading)
         {
             curAmmoInMag--;
-            PlayerStats.PlayerStatsSingleton.totalShotsFired++;
+
+            if (ownedByPlayer)
+            {
+                PlayerStats.PlayerStatsSingleton.totalShotsFired++;
+            }
 
             GameObject projectile = Instantiate(projectilePrefab);
             projectile.transform.position = projectileSpawnPoint.position;
@@ -63,7 +69,10 @@ public class Weapon : MonoBehaviour
             return;
         }
 
-        PlayerStats.PlayerStatsSingleton.totalReloads++;
+        if (ownedByPlayer)
+        {
+            PlayerStats.PlayerStatsSingleton.totalReloads++;
+        }
 
         isReloading = true;
         StartCoroutine(ReloadTimer());
@@ -93,10 +102,16 @@ public class Weapon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // I put weapons to Pickup layer. Because they can only be picked up by the player.
-        // So just remove the collider, and make the attachments and shit.
+        // So just remove the collider, and make the attachments and stuff.
 
         Player p = other.GetComponent<Player>();
+        if (p == null)
+        {
+            return;
+        }
+
         p.EquipNewWeapon(this.GetComponent<Weapon>());
+        ownedByPlayer = true;
 
         Destroy(this.GetComponent<Collider>());
     }
@@ -107,6 +122,6 @@ public class Weapon : MonoBehaviour
         isFiring = false;
     }
 
-    public bool IsReloading() { return isReloading;  }
+    public bool IsReloading() { return isReloading; }
     public bool IsFiring() { return isFiring; }
 }

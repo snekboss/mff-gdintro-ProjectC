@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class PlayerStats
 {
+    public static float GameDifficulty = 1.0f;
+
+
     public int totalShotsFired;
     public int totalReloads;
-    public int totalAmmoPickedUp;
+    public int totalAmmoPickedUp; // TODO: Implement in code.
     public int totalHealthLost;
-    public int totalHealthPickedUp;
+    public int totalHealthPickedUp; // TODO: Implement in code.
     public int totalKills;
     public float playTime;
 
@@ -33,10 +36,10 @@ public class PlayerStats
     {
         totalShotsFired = 0;
         totalReloads = 0;
-        totalAmmoPickedUp = 0; // TODO
+        totalAmmoPickedUp = 0;
         totalHealthLost = 0;
-        totalHealthPickedUp = 0; // TODO
-        totalKills = 0; // TODO
+        totalHealthPickedUp = 0;
+        totalKills = 0;
         playTime = 0;
     }
 

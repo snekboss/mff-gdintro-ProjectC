@@ -51,11 +51,7 @@ public class GameUI : MonoBehaviour
 
         if (player.isDead)
         {
-            panelGameOverScreen.SetActive(true);
-
-            txtGameOver.text = string.Format("Game Over\n\n{0}", PlayerStats.PlayerStatsSingleton.GetPlayerStats());
-            Time.timeScale = 0;
-            isGameOver = true;
+            OnGameOverButtonPressed();
             return;
         }
 
@@ -131,7 +127,17 @@ public class GameUI : MonoBehaviour
         return distance < colorSimilarityEpsilon;
     }
 
-    public void OnButtonPressBackToMainMenu()
+    public void OnShowPlayerStatsButtonPressed()
+    {
+        panelPauseMenu.SetActive(false);
+        panelGameOverScreen.SetActive(true);
+
+        txtGameOver.text = string.Format("Game Over\n\n{0}", PlayerStats.PlayerStatsSingleton.GetPlayerStats());
+        Time.timeScale = 0;
+        isGameOver = true;
+    }
+
+    public void OnGameOverButtonPressed()
     {
         PlayerStats.PlayerStatsSingleton = null;
         SceneManager.LoadScene("Main Menu");
