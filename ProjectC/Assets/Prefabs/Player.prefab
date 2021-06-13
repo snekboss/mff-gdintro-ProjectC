@@ -114,8 +114,9 @@ MonoBehaviour:
   objectsLayer:
     serializedVersion: 2
     m_Bits: 1
-  movementSpeed: 5
-  jumpPower: 4
+  movementSpeed: 8
+  jumpPower: 6
   groundDistance: 0.3
   isGrounded: 0
   mouseSensitivity: 45
+  isDead: 0

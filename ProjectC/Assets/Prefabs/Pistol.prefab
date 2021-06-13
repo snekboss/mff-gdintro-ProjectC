@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 1268304736586154099}
   - component: {fileID: 1743203465}
   - component: {fileID: 1743203466}
+  - component: {fileID: 1068896905931153408}
   m_Layer: 8
   m_Name: Pistol
   m_TagString: Untagged
@@ -181,6 +182,20 @@ MonoBehaviour:
   remainingAmmo: 14
   fireRate: 0.5
   reloadTime: 1.5
+  ownedByPlayer: 0
+--- !u!114 &1068896905931153408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268304736586154098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332ed086fb7f78d40a726ec8d0fb70f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 45
 --- !u!1 &1268304736839625488
 GameObject:
   m_ObjectHideFlags: 0

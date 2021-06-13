@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 479231655715145349}
   - component: {fileID: 479231655715145348}
   - component: {fileID: 479231655715145351}
+  - component: {fileID: 9219662786870548931}
   m_Layer: 8
   m_Name: MachineGun
   m_TagString: Untagged
@@ -268,6 +269,20 @@ MonoBehaviour:
   remainingAmmo: 90
   fireRate: 0.1
   reloadTime: 3
+  ownedByPlayer: 0
+--- !u!114 &9219662786870548931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479231655715145595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332ed086fb7f78d40a726ec8d0fb70f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 45
 --- !u!1 &479231655789154296
 GameObject:
   m_ObjectHideFlags: 0

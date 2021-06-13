@@ -256,4 +256,30 @@ public class Player : MonoBehaviour, IDamagable
     {
         return getCurrentWeapon() == null ? false : getCurrentWeapon().IsReloading();
     }
+
+    public void RefillHealth()
+    {
+        int amount = (int)(playerMaxHealth * PlayerStats.GameDifficulty);
+
+        playerHealth += amount;
+
+        if (playerHealth >= playerMaxHealth)
+        {
+            playerHealth = playerMaxHealth;
+        }
+    }
+
+    public bool RefillAmmo()
+    {
+        if (getCurrentWeapon() == null)
+        {
+            return false;
+        }
+
+        int amount = (int)(getCurrentWeapon().magazineCapacity * PlayerStats.GameDifficulty);
+
+        getCurrentWeapon().remainingAmmo += amount;
+
+        return true;
+    }
 }

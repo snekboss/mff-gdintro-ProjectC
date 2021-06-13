@@ -113,6 +113,8 @@ public class Weapon : MonoBehaviour
         p.EquipNewWeapon(this.GetComponent<Weapon>());
         ownedByPlayer = true;
 
+        Destroy(this.GetComponent<Rotator>());
+
         Destroy(this.GetComponent<Collider>());
     }
 

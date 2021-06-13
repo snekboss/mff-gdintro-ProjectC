@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 3309077881984831014}
   - component: {fileID: 3309077881984831012}
   - component: {fileID: 3309077881984831013}
+  - component: {fileID: -8436648028969658312}
   m_Layer: 8
   m_Name: Shotgun
   m_TagString: Untagged
@@ -134,11 +135,25 @@ MonoBehaviour:
   weaponName: Shotgun
   projectileSpawnPoint: {fileID: 3309077881497356169}
   projectilePrefab: {fileID: 7586371727920415791, guid: 2299233f66ac10a4cab9a6882d8828a3, type: 3}
-  curAmmoInMag: 7
-  magazineCapacity: 7
-  remainingAmmo: 14
+  curAmmoInMag: 5
+  magazineCapacity: 5
+  remainingAmmo: 10
   fireRate: 1.5
   reloadTime: 5
+  ownedByPlayer: 0
+--- !u!114 &-8436648028969658312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3309077881984831011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332ed086fb7f78d40a726ec8d0fb70f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 45
 --- !u!1 &3309077882228275686
 GameObject:
   m_ObjectHideFlags: 0

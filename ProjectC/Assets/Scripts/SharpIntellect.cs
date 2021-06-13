@@ -38,6 +38,7 @@ public class SharpIntellect : MonoBehaviour, IDamagable
         System.Random randy = new System.Random();
         int randomInt = randy.Next(possibleWeapons.Count);
         equippedWeapon = Instantiate(possibleWeapons[randomInt].gameObject).GetComponent<Weapon>();
+        Destroy(equippedWeapon.GetComponent<Rotator>());
 
         equippedWeapon.transform.parent = weaponSlot;
         equippedWeapon.transform.localPosition = Vector3.zero;
