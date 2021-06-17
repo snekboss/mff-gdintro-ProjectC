@@ -10,7 +10,10 @@ public class Spawner : MonoBehaviour
     public bool isBeneficialSpawnPoint;
     public float baseSpawnMaxTime;
     float spawnMaxTime;
+    float randomizedSpawnMaxTime;
     float spawnTimer;
+
+    const int RandomizePercent = 25;
 
     List<Transform> spawnPoints;
 
@@ -20,6 +23,7 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         spawnMaxTime = isBeneficialSpawnPoint ? baseSpawnMaxTime * PlayerStats.GameDifficulty : baseSpawnMaxTime / PlayerStats.GameDifficulty;
+
         spawnPoints = new List<Transform>();
 
         foreach (Transform child in this.transform)
@@ -36,14 +40,29 @@ public class Spawner : MonoBehaviour
         }
 
         randy = new Randy(System.Guid.NewGuid().GetHashCode());
+        randomizedSpawnMaxTime = getNextRandomizedMaxTime();
+    }
+
+    float getNextRandomizedMaxTime()
+    {
+        float randomizePercentFloat = randy.Next(RandomizePercent) / 100.0f;
+
+        if (randy.Next() % 2 == 0)
+        {
+            randomizePercentFloat = -randomizePercentFloat;
+        }
+
+        float ret = spawnMaxTime + spawnMaxTime * randomizePercentFloat;
+        return ret;
     }
 
     void Update()
     {
         spawnTimer += Time.deltaTime * Time.timeScale;
 
-        if (spawnTimer >= spawnMaxTime)
+        if (spawnTimer >= randomizedSpawnMaxTime)
         {
+            randomizedSpawnMaxTime = getNextRandomizedMaxTime();
             spawnTimer = 0;
 
             // Spawn object at some spawn point, if there isn't an object there already.

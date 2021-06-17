@@ -220,6 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2885cb8bd5239ea40a33206847c3148a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sparkParticlePrefab: {fileID: 9124583737619919082, guid: 86f0e7b519691d641bf99d2950b870cf, type: 3}
+  sparkParticleScale: 1
   projectileDamage: 10
   projectileSpeed: 50
   selfDestructTimer: 3

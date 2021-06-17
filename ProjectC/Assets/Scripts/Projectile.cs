@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour, IDamagable
 {
+    public ParticleSystem sparkParticlePrefab;
+    public float sparkParticleScale;
+
     public float projectileDamage;
     public float projectileSpeed;
     public float selfDestructTimer;
@@ -14,6 +17,7 @@ public class Projectile : MonoBehaviour, IDamagable
     {
         rbody = this.gameObject.AddComponent<Rigidbody>();
         rbody.useGravity = false;
+        rbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rbody.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         col = this.GetComponent<Collider>();
@@ -29,6 +33,12 @@ public class Projectile : MonoBehaviour, IDamagable
         {
             dmgable.GetDamaged(projectileDamage);
         }
+
+        ParticleSystem spark = Instantiate(sparkParticlePrefab);
+        spark.Play();
+        spark.transform.position = this.transform.position;
+        spark.transform.localScale = Vector3.one * sparkParticleScale;
+        Destroy(spark, spark.main.duration);
 
         Destroy(this.gameObject);
     }

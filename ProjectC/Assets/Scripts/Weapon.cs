@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public ParticleSystem muzzleFlashPrefab;
+    public float muzzleFlashScale;
+    ParticleSystem muzzleFlash;
     public string weaponName;
     public Transform projectileSpawnPoint;
     public GameObject projectilePrefab;
@@ -21,6 +24,14 @@ public class Weapon : MonoBehaviour
     bool isReloading;
 
     public bool ownedByPlayer = false;
+
+    private void Start()
+    {
+        muzzleFlash = Instantiate(muzzleFlashPrefab);
+        muzzleFlash.transform.parent = projectileSpawnPoint.transform;
+        muzzleFlash.transform.localPosition = Vector3.zero;
+        muzzleFlash.transform.localScale = Vector3.one * muzzleFlashScale;
+    }
 
     public void Fire()
     {
@@ -46,9 +57,10 @@ public class Weapon : MonoBehaviour
             {
                 PlayerStats.PlayerStatsSingleton.totalShotsFired++;
                 projectile.transform.rotation = Camera.main.transform.rotation;
+                projectile.transform.position = Camera.main.transform.position + Camera.main.transform.forward;
             }
 
-
+            muzzleFlash.Play();
             isFiring = true;
             StartCoroutine(FireTimer());
         }
