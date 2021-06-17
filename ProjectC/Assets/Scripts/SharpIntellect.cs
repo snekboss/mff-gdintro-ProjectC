@@ -15,7 +15,6 @@ public class SharpIntellect : MonoBehaviour, IDamagable
 
     Weapon equippedWeapon;
 
-    NavMeshAgent navMeshAgent;
 
     Player player;
     float playerHeight;
@@ -31,8 +30,21 @@ public class SharpIntellect : MonoBehaviour, IDamagable
 
     public float maxFireAngle = 15.0f;
 
+    // If I don't do this, the agent teleports to a suitable navmesh.
+    NavMeshAgent navMeshAgent;
+    Rigidbody rb;
+    Collider col;
+    LayerMask walkableLayerMask;
+
     void Start()
     {
+        rb = this.gameObject.AddComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.freezeRotation = true;
+
+        col = this.gameObject.GetComponent<Collider>();
+        col.isTrigger = true;
+
         health = maxHealth;
 
         System.Random randy = new System.Random();
@@ -45,13 +57,16 @@ public class SharpIntellect : MonoBehaviour, IDamagable
 
         Destroy(equippedWeapon.GetComponent<Collider>());
 
-        navMeshAgent = GetComponent<NavMeshAgent>();
-
         player = GameObject.Find("Player").GetComponent<Player>();
         playerHeight = player.gameObject.GetComponent<CapsuleCollider>().height;
     }
     void Update()
     {
+        if (navMeshAgent == null)
+        {
+            return;
+        }
+
         if (player.isDead)
         {
             this.enabled = false;
@@ -112,7 +127,7 @@ public class SharpIntellect : MonoBehaviour, IDamagable
             {
                 if (canSeePlayerPosition(playerPos))
                 {
-                    targetLookDir = (playerPos - weaponSlot.position).normalized;
+                    targetLookDir = (playerPos - weaponSlot.position);
                     break;
                 }
             }
@@ -133,9 +148,8 @@ public class SharpIntellect : MonoBehaviour, IDamagable
 
     void HandleHeadRotation()
     {
-        Quaternion lookDirQuat = Quaternion.LookRotation(targetLookDir, Vector3.up);
-        Quaternion slerpedDir = Quaternion.Slerp(faceTransform.rotation, lookDirQuat, lookSlerpSpeed * Time.deltaTime * PlayerStats.GameDifficulty);
-        transform.rotation = slerpedDir;
+        Quaternion lookDirQuat = Quaternion.LookRotation(targetLookDir);
+        faceTransform.rotation = Quaternion.Slerp(faceTransform.rotation, lookDirQuat, lookSlerpSpeed * Time.deltaTime * PlayerStats.GameDifficulty);
     }
 
     Vector3[] getCriticalPlayerPositions()
@@ -169,5 +183,22 @@ public class SharpIntellect : MonoBehaviour, IDamagable
             PlayerStats.PlayerStatsSingleton.totalKills++;
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer != walkableLayerMask)
+        {
+            return;
+        }
+
+        Destroy(rb);
+        col.isTrigger = false;
+
+        navMeshAgent = this.gameObject.AddComponent<NavMeshAgent>();
+
+        navMeshAgent.speed *= PlayerStats.GameDifficulty;
+        navMeshAgent.angularSpeed *= PlayerStats.GameDifficulty;
+        navMeshAgent.acceleration *= PlayerStats.GameDifficulty;
     }
 }

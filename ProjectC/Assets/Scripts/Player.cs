@@ -38,9 +38,6 @@ public class Player : MonoBehaviour, IDamagable
     bool isHoldingReloadButton;
     float mouseScrollWheel;
 
-    // Pick ups related
-    string tagPickup = "Pickup";
-
     // Weapon related
     List<Weapon> listWeapons;
     int iCurWeapon;

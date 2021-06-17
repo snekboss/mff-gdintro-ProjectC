@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour, IDamagable
     void Start()
     {
         rbody = this.gameObject.AddComponent<Rigidbody>();
-        rbody.useGravity = true;
+        rbody.useGravity = false;
         rbody.AddForce(rbody.transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         col = this.GetComponent<Collider>();
