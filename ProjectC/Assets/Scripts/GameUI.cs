@@ -97,11 +97,13 @@ public class GameUI : MonoBehaviour
         {
             panelPauseMenu.SetActive(true);
             Time.timeScale = 0;
+            Cursor.visible = true;
         }
         else
         {
             panelPauseMenu.SetActive(false);
             Time.timeScale = 1;
+            Cursor.visible = false;
         }
     }
 

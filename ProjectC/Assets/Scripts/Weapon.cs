@@ -38,14 +38,16 @@ public class Weapon : MonoBehaviour
         {
             curAmmoInMag--;
 
-            if (ownedByPlayer)
-            {
-                PlayerStats.PlayerStatsSingleton.totalShotsFired++;
-            }
-
             GameObject projectile = Instantiate(projectilePrefab);
             projectile.transform.position = projectileSpawnPoint.position;
             projectile.transform.rotation = projectileSpawnPoint.transform.rotation;
+
+            if (ownedByPlayer)
+            {
+                PlayerStats.PlayerStatsSingleton.totalShotsFired++;
+                projectile.transform.rotation = Camera.main.transform.rotation;
+            }
+
 
             isFiring = true;
             StartCoroutine(FireTimer());

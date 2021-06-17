@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour, IDamagable
     {
         rbody = this.gameObject.AddComponent<Rigidbody>();
         rbody.useGravity = false;
-        rbody.AddForce(rbody.transform.forward * projectileSpeed, ForceMode.VelocityChange);
+        rbody.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         col = this.GetComponent<Collider>();
         col.isTrigger = true;
