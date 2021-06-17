@@ -105,7 +105,7 @@ public class Weapon : MonoBehaviour
         yield return new WaitForSeconds(reloadTime);
 
         int neededAmmo = magazineCapacity - curAmmoInMag;
-        int whatWeGot = Mathf.Min(neededAmmo, magazineCapacity);
+        int whatWeGot = Mathf.Min(neededAmmo, remainingAmmo);
         curAmmoInMag += whatWeGot;
         remainingAmmo -= whatWeGot;
 

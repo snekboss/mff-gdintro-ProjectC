@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-
+    public Text txtEasy;
+    public Text txtHard;
     public Text txtMouseSensitivity;
     public Slider sliderMouseSensitivity;
 
@@ -66,6 +67,8 @@ public class MainMenuUI : MonoBehaviour
         btnExitGame.gameObject.SetActive(false);
         sliderGameDifficulty.gameObject.SetActive(false);
         txtGameDifficulty.gameObject.SetActive(false);
+        txtEasy.gameObject.SetActive(false);
+        txtHard.gameObject.SetActive(false);
     }
 
     public void OnMouseSensitivitySliderValueChanged()
@@ -90,5 +93,7 @@ public class MainMenuUI : MonoBehaviour
         btnExitGame.gameObject.SetActive(true);
         sliderGameDifficulty.gameObject.SetActive(true);
         txtGameDifficulty.gameObject.SetActive(true);
+        txtEasy.gameObject.SetActive(true);
+        txtHard.gameObject.SetActive(true);
     }
 }

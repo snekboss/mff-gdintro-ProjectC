@@ -40,6 +40,7 @@ public class GameUI : MonoBehaviour
         imagePlayerHealth = panelPlayerHealth.GetComponent<Image>();
 
         colorReloadTargetIndex = 0;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -131,6 +132,7 @@ public class GameUI : MonoBehaviour
 
     public void OnShowPlayerStatsButtonPressed()
     {
+        Cursor.visible = true;
         panelPauseMenu.SetActive(false);
         panelGameOverScreen.SetActive(true);
 

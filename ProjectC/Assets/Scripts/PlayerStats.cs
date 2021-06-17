@@ -10,9 +10,9 @@ public class PlayerStats
 
     public int totalShotsFired;
     public int totalReloads;
-    public int totalAmmoPickedUp; // TODO: Implement in code.
+    public int totalAmmoPickedUp;
     public int totalHealthLost;
-    public int totalHealthPickedUp; // TODO: Implement in code.
+    public int totalHealthPickedUp;
     public int totalKills;
     public float playTime;
 

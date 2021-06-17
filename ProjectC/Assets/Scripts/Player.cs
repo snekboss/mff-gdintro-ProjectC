@@ -256,7 +256,8 @@ public class Player : MonoBehaviour, IDamagable
 
     public void RefillHealth()
     {
-        int amount = (int)(playerMaxHealth * PlayerStats.GameDifficulty);
+        int before = playerHealth;
+        int amount = (int)(playerMaxHealth / PlayerStats.GameDifficulty);
 
         playerHealth += amount;
 
@@ -264,6 +265,8 @@ public class Player : MonoBehaviour, IDamagable
         {
             playerHealth = playerMaxHealth;
         }
+        int after = playerHealth;
+        PlayerStats.PlayerStatsSingleton.totalHealthPickedUp += after - before;
     }
 
     public bool RefillAmmo()
@@ -273,7 +276,9 @@ public class Player : MonoBehaviour, IDamagable
             return false;
         }
 
-        int amount = (int)(getCurrentWeapon().magazineCapacity * PlayerStats.GameDifficulty);
+        int amount = (int)(getCurrentWeapon().magazineCapacity / PlayerStats.GameDifficulty);
+
+        PlayerStats.PlayerStatsSingleton.totalAmmoPickedUp += amount;
 
         getCurrentWeapon().remainingAmmo += amount;
 
